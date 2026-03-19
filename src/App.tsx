@@ -20,7 +20,7 @@ const App = () => {
   const [currentWord, setCurrentWord] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const loaderParticles = useMemo(() => 
+  const loaderParticles = useMemo(() =>
     Array.from({ length: typeof window !== 'undefined' && window.innerWidth < 768 ? 12 : 24 }, (_, i) => ({
       isSaffron: i % 3 !== 0,
       size: 1 + Math.random() * 3,
@@ -391,9 +391,7 @@ const App = () => {
               <div className="w-8 h-[1px] bg-[#FF9933]" />
               <div className="w-1 h-1 rounded-sm bg-[#FF9933] rotate-45" />
             </div>
-            <div className="bg-white/70 backdrop-blur-lg border border-black/[0.04] px-5 py-1.5 rounded-full">
-              <span className="text-[8.5px] tracking-[0.1em] font-medium text-[#1b1918]/60">India's Premier Narrative Wellness Platform</span>
-            </div>
+
             <div className="flex items-center gap-1 opacity-40">
               <div className="w-1 h-1 rounded-sm bg-[#138808] rotate-45" />
               <div className="w-8 h-[1px] bg-[#138808]" />
