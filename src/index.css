@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+/* Elite Heritage Palette */
+:root {
+  --joy-saffron: #FF9933;
+  --joy-green: #138808;
+  --joy-navy: #0F2C59;
+  --joy-black: #111111;
+}
+
+/* Master Waves - Ribbon Effect */
+.joy-wave-saffron {
+  background: radial-gradient(ellipse at 0% 50%, rgba(255, 153, 51, 0.18) 0%, transparent 65%);
+  filter: blur(50px);
+}
+
+.joy-wave-green {
+  background: radial-gradient(ellipse at 100% 50%, rgba(19, 136, 8, 0.15) 0%, transparent 65%);
+  filter: blur(50px);
+}
+
+/* India Tricolor Text Mask */
+.text-india-flag {
+  background: linear-gradient(to bottom, #FF9933 15%, #FF9933 35%, #1a1a1a 35%, #1a1a1a 65%, #138808 65%, #138808 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  position: relative;
+}
+
+.text-india-flag::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #FF9933 0%, #138808 100%);
+  opacity: 0.3;
+  border-radius: 2px;
+}
+
+/* Refined Premium UI */
+.nav-pill {
+  @apply text-[10px] tracking-[0.25em] font-semibold uppercase text-black/60 hover:text-black transition-colors;
+}
+
+.btn-joy-dark {
+  background: var(--joy-black);
+  @apply text-white px-8 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-2xl transition-all hover:scale-105 active:scale-95 hover:shadow-black/20;
+}
+
+.btn-joy-outline {
+  @apply border border-black/10 px-8 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-black/5 transition-all;
+}
+
+.badge-outline {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+}
+
+/* Custom Serif Hierarchy */
+.hero-title {
+  font-family: 'EB Garamond', serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Beautiful glass navbar */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+}
+
+/* Glowing dark button */
+.btn-glow-dark {
+  background: #111111;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-glow-dark:hover {
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Light button */
+.btn-light {
+  background: rgba(255, 255, 255, 0.8);
+  color: #111111;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+  background: #ffffff;
+  box-shadow: 0 6px 25px -5px rgba(0, 0, 0, 0.08);
+}
+
+/* Organic Paper Texture Overlay */
+.textured-paper::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 100;
+  background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+}
+
+/* Radiant Heritage Gradient - A more complex, 3D feeling glow */
+.radiant-core {
+  background: 
+    radial-gradient(circle at 50% -20%, rgba(255, 153, 51, 0.25) 0%, transparent 60%),
+    radial-gradient(circle at 5% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 95% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 50% 120%, rgba(19, 136, 8, 0.2) 0%, transparent 60%);
+}
+
+/* Elegant framing borders */
+.frame-border {
+  border: 1px solid rgba(15, 44, 89, 0.08); /* Chakra Navy */
+}
+
+/* Custom Serif styling for a "Modern Heritage" look */
+.luxury-serif {
+  font-family: "EB Garamond", serif;
+  font-feature-settings: "swsh" 1, "ss01" 1;
+}
