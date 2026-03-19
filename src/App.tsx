@@ -21,7 +21,7 @@ const App = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const loaderParticles = useMemo(() => 
-    Array.from({ length: 24 }, (_, i) => ({
+    Array.from({ length: typeof window !== 'undefined' && window.innerWidth < 768 ? 12 : 24 }, (_, i) => ({
       isSaffron: i % 3 !== 0,
       size: 1 + Math.random() * 3,
       x: Math.random() * 100,
@@ -36,7 +36,8 @@ const App = () => {
 
   const navSparkles = useMemo(() => {
     const colors = ['#FF9933', '#FFB347', '#ffffff', '#138808', '#90EE90', '#FFD700'];
-    return Array.from({ length: 60 }, (_, i) => ({
+    const sparkleCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 15 : 60;
+    return Array.from({ length: sparkleCount }, (_, i) => ({
       color: colors[i % colors.length],
       size: 1 + Math.random() * 2,
       left: 5 + Math.random() * 90,
@@ -73,9 +74,9 @@ const App = () => {
             transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-[200] bg-[#faf9f7] flex flex-col items-center justify-center overflow-hidden"
           >
-            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#FF9933] opacity-[0.08] blur-[120px]" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#138808] opacity-[0.06] blur-[120px]" />
-            <div className="absolute w-[300px] h-[300px] rounded-full bg-[#FF9933] opacity-[0.04] blur-[80px]" />
+            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#FF9933] opacity-[0.08] blur-[60px] md:blur-[120px]" />
+            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#138808] opacity-[0.06] blur-[60px] md:blur-[120px]" />
+            <div className="absolute w-[300px] h-[300px] rounded-full bg-[#FF9933] opacity-[0.04] blur-[40px] md:blur-[80px]" />
 
             {loaderParticles.map((p, i) => (
               <motion.div
@@ -196,11 +197,11 @@ const App = () => {
                 <stop offset="0%" stopColor="#138808" stopOpacity="0.6" />
                 <stop offset="100%" stopColor="#138808" stopOpacity="0" />
               </linearGradient>
-              <radialGradient id="glow-saffron" cx="20%" cy="30%" r="50%">
+              <radialGradient id="glow-saffron" cx="35%" cy="30%" r="50%">
                 <stop offset="0%" stopColor="#FF9933" stopOpacity="0.15" />
                 <stop offset="100%" stopColor="#FF9933" stopOpacity="0" />
               </radialGradient>
-              <radialGradient id="glow-green" cx="80%" cy="70%" r="50%">
+              <radialGradient id="glow-green" cx="65%" cy="70%" r="50%">
                 <stop offset="0%" stopColor="#138808" stopOpacity="0.12" />
                 <stop offset="100%" stopColor="#138808" stopOpacity="0" />
               </radialGradient>
@@ -210,15 +211,15 @@ const App = () => {
             <rect width="100%" height="100%" fill="url(#glow-green)" />
 
             <g transform="translate(0, 100)">
-              <path d="M-200 200 C 100 400, 400 450, 800 650" fill="none" stroke="url(#wave-saffron)" strokeWidth="60" filter="blur(20px)" opacity="0.4" />
-              <path d="M-200 220 C 150 420, 350 480, 800 680" fill="none" stroke="url(#wave-saffron)" strokeWidth="20" filter="blur(10px)" opacity="0.6" />
-              <path d="M-200 240 C 200 440, 300 500, 750 670" fill="none" stroke="url(#wave-saffron)" strokeWidth="2" opacity="0.8" />
+              <path d="M-200 200 C 300 400, 600 450, 1200 650" fill="none" stroke="url(#wave-saffron)" strokeWidth="60" opacity="0.3" />
+              <path d="M-200 220 C 350 420, 650 480, 1200 680" fill="none" stroke="url(#wave-saffron)" strokeWidth="20" opacity="0.5" />
+              <path d="M-200 240 C 400 440, 700 500, 1150 670" fill="none" stroke="url(#wave-saffron)" strokeWidth="2" opacity="0.8" />
             </g>
 
-            <g transform="translate(200, 20)">
-              <path d="M 1600 800 C 1100 700, 900 650, 400 550" fill="none" stroke="url(#wave-green)" strokeWidth="80" filter="blur(30px)" opacity="0.4" />
-              <path d="M 1600 750 C 1200 650, 850 600, 450 500" fill="none" stroke="url(#wave-green)" strokeWidth="30" filter="blur(15px)" opacity="0.5" />
-              <path d="M 1600 720 C 1250 620, 800 550, 480 470" fill="none" stroke="url(#wave-green)" strokeWidth="3" opacity="0.7" />
+            <g transform="translate(0, 20)">
+              <path d="M 1600 800 C 1000 700, 700 650, 200 550" fill="none" stroke="url(#wave-green)" strokeWidth="80" opacity="0.3" />
+              <path d="M 1600 750 C 1050 650, 750 600, 250 500" fill="none" stroke="url(#wave-green)" strokeWidth="30" opacity="0.4" />
+              <path d="M 1600 720 C 1100 620, 800 550, 280 470" fill="none" stroke="url(#wave-green)" strokeWidth="3" opacity="0.7" />
             </g>
 
             <pattern id="mesh" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -239,7 +240,7 @@ const App = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="absolute top-4 left-0 right-0 z-[100] w-full flex justify-center px-4 md:px-6 pointer-events-none"
         >
-          <header className="relative w-full max-w-[980px] px-1.5 py-1.5 flex justify-between items-center bg-white/70 backdrop-blur-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_30px_rgba(0,0,0,0.04)] rounded-full border border-white/60 pointer-events-auto overflow-hidden">
+          <header className="relative w-full max-w-[980px] px-1.5 py-1.5 flex justify-between items-center bg-white/70 backdrop-blur-md md:backdrop-blur-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_30px_rgba(0,0,0,0.04)] rounded-full border border-white/60 pointer-events-auto overflow-hidden">
 
             {navSparkles.map((s, i) => (
               <motion.div
@@ -308,7 +309,7 @@ const App = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-[150] bg-[#faf9f7]/95 backdrop-blur-2xl flex flex-col items-center justify-center overflow-hidden"
+              className="fixed inset-0 z-[150] bg-[#faf9f7]/95 backdrop-blur-md md:backdrop-blur-2xl flex flex-col items-center justify-center overflow-hidden"
             >
               <div className="absolute top-0 left-0 right-0 h-[2px] flex">
                 <div className="flex-1 bg-[#FF9933]" />
@@ -316,8 +317,8 @@ const App = () => {
                 <div className="flex-1 bg-[#138808]" />
               </div>
 
-              <div className="absolute top-[-15%] left-[-15%] w-[350px] h-[350px] rounded-full bg-[#FF9933] opacity-[0.06] blur-[100px]" />
-              <div className="absolute bottom-[-15%] right-[-15%] w-[350px] h-[350px] rounded-full bg-[#138808] opacity-[0.05] blur-[100px]" />
+              <div className="absolute top-[-15%] left-[-15%] w-[350px] h-[350px] rounded-full bg-[#FF9933] opacity-[0.06] blur-[50px] md:blur-[100px]" />
+              <div className="absolute bottom-[-15%] right-[-15%] w-[350px] h-[350px] rounded-full bg-[#138808] opacity-[0.05] blur-[50px] md:blur-[100px]" />
 
               <button
                 onClick={() => setMenuOpen(false)}
