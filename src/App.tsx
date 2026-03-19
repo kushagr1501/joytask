@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const namasteWords = [
   { text: 'नमस्ते', lang: 'Hindi' },
@@ -19,6 +19,34 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [currentWord, setCurrentWord] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const loaderParticles = useMemo(() => 
+    Array.from({ length: 24 }, (_, i) => ({
+      isSaffron: i % 3 !== 0,
+      size: 1 + Math.random() * 3,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      duration: 15 + Math.random() * 25,
+      delay: Math.random() * 5,
+      opacity: 0.2 + Math.random() * 0.4,
+      animY: -30 - Math.random() * 40,
+      animX: (Math.random() - 0.5) * 60,
+    })), []
+  );
+
+  const navSparkles = useMemo(() => {
+    const colors = ['#FF9933', '#FFB347', '#ffffff', '#138808', '#90EE90', '#FFD700'];
+    return Array.from({ length: 60 }, (_, i) => ({
+      color: colors[i % colors.length],
+      size: 1 + Math.random() * 2,
+      left: 5 + Math.random() * 90,
+      top: 15 + Math.random() * 70,
+      shadowSize: 3 + Math.random() * 4,
+      animX: (Math.random() - 0.5) * 40,
+      duration: 2 + Math.random() * 3,
+      delay: Math.random() * 4,
+    }));
+  }, []);
 
   useEffect(() => {
     const wordInterval = setInterval(() => {
@@ -49,39 +77,31 @@ const App = () => {
             <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#138808] opacity-[0.06] blur-[120px]" />
             <div className="absolute w-[300px] h-[300px] rounded-full bg-[#FF9933] opacity-[0.04] blur-[80px]" />
 
-            {[...Array(24)].map((_, i) => {
-              const isSaffron = i % 3 !== 0;
-              const size = 1 + Math.random() * 3;
-              const x = Math.random() * 100;
-              const y = Math.random() * 100;
-              const duration = 15 + Math.random() * 25;
-              const delay = Math.random() * 5;
-              return (
-                <motion.div
-                  key={i}
-                  className="absolute rounded-full"
-                  style={{
-                    width: size,
-                    height: size,
-                    left: `${x}%`,
-                    top: `${y}%`,
-                    background: isSaffron ? '#FF9933' : '#138808',
-                    opacity: 0.2 + Math.random() * 0.4,
-                  }}
-                  animate={{
-                    y: [0, -30 - Math.random() * 40, 0],
-                    x: [0, (Math.random() - 0.5) * 60, 0],
-                    opacity: [0.15, 0.6, 0.15],
-                  }}
-                  transition={{
-                    duration,
-                    delay,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                />
-              );
-            })}
+            {loaderParticles.map((p, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full"
+                style={{
+                  width: p.size,
+                  height: p.size,
+                  left: `${p.x}%`,
+                  top: `${p.y}%`,
+                  background: p.isSaffron ? '#FF9933' : '#138808',
+                  opacity: p.opacity,
+                }}
+                animate={{
+                  y: [0, p.animY, 0],
+                  x: [0, p.animX, 0],
+                  opacity: [0.15, 0.6, 0.15],
+                }}
+                transition={{
+                  duration: p.duration,
+                  delay: p.delay,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
 
             <motion.div
               animate={{ rotate: 360 }}
@@ -93,7 +113,7 @@ const App = () => {
                   key={i}
                   className="absolute w-[1px] h-[8px] bg-[#1b1918]/[0.05] origin-bottom"
                   style={{
-                    transform: `rotate(${i * 15}deg) translateY(-${90}px)`,
+                    transform: `rotate(${i * 15}deg) translateY(-90px)`,
                   }}
                 />
               ))}
@@ -217,42 +237,37 @@ const App = () => {
           initial={{ y: -30, opacity: 0 }}
           animate={!loading ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute top-4 left-0 right-0 z-[100] w-full flex justify-center px-6 pointer-events-none"
+          className="absolute top-4 left-0 right-0 z-[100] w-full flex justify-center px-4 md:px-6 pointer-events-none"
         >
           <header className="relative w-full max-w-[980px] px-1.5 py-1.5 flex justify-between items-center bg-white/70 backdrop-blur-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_30px_rgba(0,0,0,0.04)] rounded-full border border-white/60 pointer-events-auto overflow-hidden">
 
-            {[...Array(60)].map((_, i) => {
-              const colors = ['#FF9933', '#FFB347', '#ffffff', '#138808', '#90EE90', '#FFD700'];
-              const color = colors[i % colors.length];
-              const size = 1 + Math.random() * 2;
-              return (
-                <motion.div
-                  key={`sparkle-${i}`}
-                  className="absolute rounded-full pointer-events-none"
-                  style={{
-                    width: size,
-                    height: size,
-                    left: `${5 + Math.random() * 90}%`,
-                    top: `${15 + Math.random() * 70}%`,
-                    background: color,
-                    boxShadow: `0 0 ${3 + Math.random() * 4}px ${color}`,
-                  }}
-                  animate={{
-                    opacity: [0, 0.9, 0, 0.7, 0],
-                    scale: [0.5, 1.2, 0.5, 1, 0.5],
-                    x: [0, (Math.random() - 0.5) * 40, 0],
-                  }}
-                  transition={{
-                    duration: 2 + Math.random() * 3,
-                    delay: Math.random() * 4,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                />
-              );
-            })}
+            {navSparkles.map((s, i) => (
+              <motion.div
+                key={`sparkle-${i}`}
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: s.size,
+                  height: s.size,
+                  left: `${s.left}%`,
+                  top: `${s.top}%`,
+                  background: s.color,
+                  boxShadow: `0 0 ${s.shadowSize}px ${s.color}`,
+                }}
+                animate={{
+                  opacity: [0, 0.9, 0, 0.7, 0],
+                  scale: [0.5, 1.2, 0.5, 1, 0.5],
+                  x: [0, s.animX, 0],
+                }}
+                transition={{
+                  duration: s.duration,
+                  delay: s.delay,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
 
-            <div className="relative z-10 flex items-center cursor-pointer pl-4 pr-5 py-1">
+            <div className="relative z-10 flex items-center cursor-pointer pl-3 md:pl-4 pr-3 md:pr-5 py-1">
               <span className="font-serif text-[1rem] font-bold tracking-[-0.04em] text-[#111]">joy</span>
               <div className="w-[3px] h-[3px] rounded-full bg-[#FF9933] mt-[6px] ml-[1px]" />
             </div>
@@ -271,12 +286,9 @@ const App = () => {
             </nav>
 
             <div className="relative z-10 flex items-center gap-1.5">
-              <button className="hidden md:flex items-center gap-1.5 bg-[#111] text-white pl-4 pr-3.5 py-[6px] rounded-full text-[11px] font-medium tracking-[-0.01em] shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:-translate-y-[0.5px] transition-all duration-300 group">
+              <button className="hidden lg:flex items-center gap-1.5 bg-[#111] text-white pl-4 pr-3.5 py-[6px] rounded-full text-[11px] font-medium tracking-[-0.01em] shadow-[0_2px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:-translate-y-[0.5px] transition-all duration-300 group">
                 Experience JoyShops
                 <ArrowRight size={12} strokeWidth={2} className="opacity-60 group-hover:translate-x-0.5 transition-transform" />
-              </button>
-              <button className="hidden sm:flex md:hidden items-center bg-[#f7f7f7] hover:bg-[#f0f0f0] px-4 py-[6px] rounded-full text-[11px] font-medium tracking-[-0.01em] text-[#555] transition-all duration-300 border border-transparent hover:border-black/[0.04]">
-                Talk to Us
               </button>
               <button
                 onClick={() => setMenuOpen(true)}
@@ -377,7 +389,9 @@ const App = () => {
               <div className="w-8 h-[1px] bg-[#FF9933]" />
               <div className="w-1 h-1 rounded-sm bg-[#FF9933] rotate-45" />
             </div>
-
+            <div className="bg-white/70 backdrop-blur-lg border border-black/[0.04] px-5 py-1.5 rounded-full">
+              <span className="text-[8.5px] tracking-[0.1em] font-medium text-[#1b1918]/60">India's Premier Narrative Wellness Platform</span>
+            </div>
             <div className="flex items-center gap-1 opacity-40">
               <div className="w-1 h-1 rounded-sm bg-[#138808] rotate-45" />
               <div className="w-8 h-[1px] bg-[#138808]" />
@@ -388,7 +402,7 @@ const App = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={!loading ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.65 }}
-            className="font-serif text-[3.8rem] md:text-[5.5rem] lg:text-[7rem] leading-[1] text-[#1b1918] tracking-tight text-center mb-8"
+            className="font-serif text-[2.8rem] sm:text-[3.8rem] md:text-[5.5rem] lg:text-[7rem] leading-[1] text-[#1b1918] tracking-tight text-center mb-6 md:mb-8"
           >
             Joy for all <span className="italic font-light opacity-80 pl-1 pr-2">from</span>
             <span className="relative inline-block">
@@ -404,12 +418,12 @@ const App = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={!loading ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.85 }}
-            className="text-center mb-10"
+            className="text-center mb-8 md:mb-10"
           >
-            <p className="text-[0.95rem] md:text-[1.15rem] text-[#1b1918]/60 font-light tracking-[0.02em] leading-relaxed">
+            <p className="text-[0.85rem] sm:text-[0.95rem] md:text-[1.15rem] text-[#1b1918]/60 font-light tracking-[0.02em] leading-relaxed">
               Built on profound <span className="font-semibold text-[#1b1918]/90">stillness.</span> Powered by <span className="font-semibold text-[#1b1918]/90">abundant energy.</span>
             </p>
-            <p className="text-[0.95rem] md:text-[1.15rem] text-[#1b1918]/60 font-light tracking-[0.02em]">
+            <p className="text-[0.85rem] sm:text-[0.95rem] md:text-[1.15rem] text-[#1b1918]/60 font-light tracking-[0.02em]">
               Delivering population-scale joy.
             </p>
           </motion.div>
@@ -432,7 +446,7 @@ const App = () => {
           initial={{ opacity: 0 }}
           animate={!loading ? { opacity: 1 } : {}}
           transition={{ duration: 0.7, delay: 1.2 }}
-          className="relative z-10 flex flex-col items-center gap-3 pb-6"
+          className="relative z-10 flex flex-col items-center gap-3 pb-4 md:pb-6"
         >
           <motion.div
             animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
