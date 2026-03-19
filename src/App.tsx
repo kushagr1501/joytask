@@ -70,8 +70,9 @@ const App = () => {
         {loading && (
           <motion.div
             key="loader"
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
+            style={{ willChange: 'opacity' }}
             className="fixed inset-0 z-[200] bg-[#faf9f7] flex flex-col items-center justify-center overflow-hidden"
           >
             <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#FF9933] opacity-[0.08] blur-[60px] md:blur-[120px]" />
@@ -187,7 +188,7 @@ const App = () => {
       <div className="relative h-screen w-full bg-[#fcfcfc] text-[#1a1a1a] font-sans selection:bg-[#FF9933]/20 overflow-hidden flex flex-col justify-between items-center">
 
         <div className="absolute inset-0 pointer-events-none z-0">
-          <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full opacity-60">
+          <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full opacity-100">
             <defs>
               <linearGradient id="wave-saffron" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#FF9933" stopOpacity="0.8" />
@@ -198,11 +199,11 @@ const App = () => {
                 <stop offset="100%" stopColor="#138808" stopOpacity="0" />
               </linearGradient>
               <radialGradient id="glow-saffron" cx="35%" cy="30%" r="50%">
-                <stop offset="0%" stopColor="#FF9933" stopOpacity="0.15" />
+                <stop offset="0%" stopColor="#FF9933" stopOpacity="0.3" />
                 <stop offset="100%" stopColor="#FF9933" stopOpacity="0" />
               </radialGradient>
               <radialGradient id="glow-green" cx="65%" cy="70%" r="50%">
-                <stop offset="0%" stopColor="#138808" stopOpacity="0.12" />
+                <stop offset="0%" stopColor="#138808" stopOpacity="0.25" />
                 <stop offset="100%" stopColor="#138808" stopOpacity="0" />
               </radialGradient>
             </defs>
@@ -211,15 +212,15 @@ const App = () => {
             <rect width="100%" height="100%" fill="url(#glow-green)" />
 
             <g transform="translate(0, 100)">
-              <path d="M-200 200 C 300 400, 600 450, 1200 650" fill="none" stroke="url(#wave-saffron)" strokeWidth="60" opacity="0.3" />
-              <path d="M-200 220 C 350 420, 650 480, 1200 680" fill="none" stroke="url(#wave-saffron)" strokeWidth="20" opacity="0.5" />
-              <path d="M-200 240 C 400 440, 700 500, 1150 670" fill="none" stroke="url(#wave-saffron)" strokeWidth="2" opacity="0.8" />
+              <path d="M-200 200 C 300 400, 600 450, 1200 650" fill="none" stroke="url(#wave-saffron)" strokeWidth="60" opacity="0.5" />
+              <path d="M-200 220 C 350 420, 650 480, 1200 680" fill="none" stroke="url(#wave-saffron)" strokeWidth="20" opacity="0.7" />
+              <path d="M-200 240 C 400 440, 700 500, 1150 670" fill="none" stroke="url(#wave-saffron)" strokeWidth="2" opacity="1" />
             </g>
 
             <g transform="translate(0, 20)">
-              <path d="M 1600 800 C 1000 700, 700 650, 200 550" fill="none" stroke="url(#wave-green)" strokeWidth="80" opacity="0.3" />
-              <path d="M 1600 750 C 1050 650, 750 600, 250 500" fill="none" stroke="url(#wave-green)" strokeWidth="30" opacity="0.4" />
-              <path d="M 1600 720 C 1100 620, 800 550, 280 470" fill="none" stroke="url(#wave-green)" strokeWidth="3" opacity="0.7" />
+              <path d="M 1600 800 C 1000 700, 700 650, 200 550" fill="none" stroke="url(#wave-green)" strokeWidth="80" opacity="0.5" />
+              <path d="M 1600 750 C 1050 650, 750 600, 250 500" fill="none" stroke="url(#wave-green)" strokeWidth="30" opacity="0.6" />
+              <path d="M 1600 720 C 1100 620, 800 550, 280 470" fill="none" stroke="url(#wave-green)" strokeWidth="3" opacity="0.9" />
             </g>
 
             <pattern id="mesh" width="40" height="40" patternUnits="userSpaceOnUse">
